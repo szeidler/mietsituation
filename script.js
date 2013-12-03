@@ -10,6 +10,7 @@ function initialize() {
       mapOptions);
   
   loadPoints(fillArray());
+  createSlider();
 }
 
 function fillArray(){
@@ -36,7 +37,6 @@ function loadPoints(dataArray){
       weight: Math.pow(2, magnitude)
     };
     heatmapData.push(weightedLoc);
-    console.log(latLng);
   }
   var heatmap = new google.maps.visualization.HeatmapLayer({
     data: heatmapData,
@@ -44,3 +44,21 @@ function loadPoints(dataArray){
     map: map
     });
 }
+
+function createSlider(){
+    var select = $("#years");
+    console.log(select);
+
+    var slider = $("<div id='slider'></div>").insertAfter(select).slider({
+      min: 1,
+      max: 3,
+      range: "min",
+      value: select[0].selectedIndex + 1,
+      slide: function( event, ui ) {
+        select[0].selectedIndex = ui.value - 1;
+      }
+    });
+    $( "#years" ).change(function() {
+      slider.slider( "value", this.selectedIndex + 1 );
+    });
+  }
