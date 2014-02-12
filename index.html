@@ -36,11 +36,13 @@
 						maxZoom: 18
 					}
 				);
+				
+				var tLRadius = 350;
 
 				var heatmapLayer = L.TileLayer.heatMap({
 					// radius could be absolute or relative
 					// absolute: radius in meters, relative: radius in pixels
-					radius: { value: 80, absolute: true },
+					radius: { value: tLRadius, absolute: true },
 			        //radius: { value: 20, absolute: false },
 					opacity: 1,
 					gradient: {
@@ -60,6 +62,89 @@
 					zoom: 12,
 					layers: [baseLayer, heatmapLayer]
 				});
+				
+				map.on('zoomend', function(e) {
+
+					var newArray = new Array();
+					url = "leaflet-heatmap" + map.getZoom() + ".json";
+					
+					switch(map.getZoom())
+					{
+					case 1:
+						break;
+					case 2:
+						break;
+					case 3:
+						break;
+					case 4:
+						break;
+					case 5:
+						break;
+					case 6:
+						break;
+					case 7:
+						break;
+					case 8:
+						break;
+					case 9:
+						heatmapLayer.options.radius.value = 700;
+						break;
+					case 10:
+						// 2.000 entries
+						heatmapLayer.options.radius.value = 470;
+						break;
+					case 11:
+						heatmapLayer.options.radius.value = 450;
+						break;
+					case 12:
+						heatmapLayer.options.radius.value = 350;
+						break;
+					case 13:
+						// 10.000 entries
+						heatmapLayer.options.radius.value = 225;
+						break;
+					case 14:
+						// 50.000 entries
+						heatmapLayer.options.radius.value = 100;
+						break;
+					case 15:
+						// all entries
+						heatmapLayer.options.radius.value = 80;
+						break;
+					case 16:
+						break;
+					case 17:
+						break;
+					case 18: 
+						break;
+					}
+					
+					// fetch data
+					$.ajax({
+					async: false,
+					url: url,
+					dataType: "json",
+					success: function(data) {
+						$.each(data, function(i, item) {
+							newArray.push({
+								"lon" : item.lon,
+								"lat" : item.lat,
+								"value" : item.value
+							});
+						});
+					}
+					});
+					var testData={
+						max: 31,
+						data: newArray
+					};
+					
+					heatmapLayer.setData(testData.data);
+					map.removeLayer(heatmapLayer); 
+					map.addLayer(heatmapLayer);
+					
+				});
+				
 
 				// make accessible for debugging
 				layer = heatmapLayer;
@@ -72,7 +157,7 @@
 
 	<script type="text/javascript" charset="utf-8">
 	var dataArray = new Array();
-	url = "leaflet-heatmap.json";
+	url = "leaflet-heatmap12.json";
 	$.ajax({
 		async: false,
 		url: url,
