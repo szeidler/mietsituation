@@ -1,29 +1,94 @@
-<!DOCTYPE html>
-<html>
-  <head>
-  	<title>Mietsituation Berlin</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-     <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjq9WJHGC4aW_hxzdNxJ1AFsG-FiHkOI4&sensor=true">
-    </script>
-    <script type="text/javascript" src="script.js"></script>
-    <script type="text/javascript"
-  	src="http://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=true"></script>
-  </head>
-  <body>
-    <div id="map-canvas"></div>
 
-    <form id="reservation">
-        <label for="years">Select Year</label>
-        <select name="years" id="years">
-          <option>2008</option>
-          <option>2010</option>
-          <option>2012</option>
-        </select>
-    </form>
-  </body>
+<!DOCTYPE html lang="en-UK">
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Mietsituation Berlin 2013</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css" />
+		<!--[if lte IE 8]>
+		    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css" />
+		<![endif]-->
+		<style type="text/css" media="screen">
+			body{
+				margin: 0;
+				padding: 0;
+			}
+
+			#map {
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+		<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet-src.js"></script>
+		<script type="text/javascript" src="src/heatmap.js"></script>
+		<script type="text/javascript" src="src/heatmap-leaflet.js"></script>
+		<script type="text/javascript" src="src/QuadTree.js"></script>
+
+		<script type="text/javascript" charset="utf-8">
+			$(function() {
+				var baseLayer = L.tileLayer(
+					'http://{s}.tile.cloudmade.com/ad132e106cd246ec961bbdfbe0228fe8/997/256/{z}/{x}/{y}.png',{
+						attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+						maxZoom: 18
+					}
+				);
+
+				var heatmapLayer = L.TileLayer.heatMap({
+					// radius could be absolute or relative
+					// absolute: radius in meters, relative: radius in pixels
+					radius: { value: 80, absolute: true },
+			        //radius: { value: 20, absolute: false },
+					opacity: 1,
+					gradient: {
+						0.16: "rgb(255,25,0)",
+						0.33: "rgb(225,100,0)",
+						0.5: "rgb(255, 235, 0)",
+						0.67: "rgb(209,255,0)",
+						0.83: "rgb(109,255,0)",
+						1.0: "rgb(25,255,0)"
+					}
+				});
+
+				heatmapLayer.setData(testData.data);
+
+				var map = new L.Map('map', {
+					center: new L.LatLng(52.50849,13.403637),
+					zoom: 12,
+					layers: [baseLayer, heatmapLayer]
+				});
+
+				// make accessible for debugging
+				layer = heatmapLayer;
+			});
+		</script>
+	</head>
+	<body>
+		<div id="map"></div>
+	</body>
+
+	<script type="text/javascript" charset="utf-8">
+	var dataArray = new Array();
+	url = "leaflet-heatmap.json";
+	$.ajax({
+		async: false,
+		url: url,
+		dataType: "json",
+		success: function(data) {
+			$.each(data, function(i, item) {
+					dataArray.push({"lon" : item.lon,
+	 		 		  "lat" : item.lat,
+						"value" : item.value
+	 		 	  });
+			});
+		}
+	});
+			var testData={
+    		max: 31,
+    		data: dataArray
+    	};
+	</script>
 </html>
