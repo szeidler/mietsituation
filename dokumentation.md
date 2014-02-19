@@ -2,11 +2,11 @@
 
 # Konzeptionelle Phase
 
-Als Gruppe beschlossen wir, die Datenqualität über die Mietsituation in Berlin zu verbessern. Erste Untersuchungen ergaben, dass von der Berliner Senatsverwaltung für Stadtentwicklung und Umwelt ein Straßenverzeichnis im PDF-Format mit über 10.000 nicht maschinenlesbaren Einträgen über die Wohnlagen in Berlin vorlag.
+Als Gruppe beschlossen wir, die Datenqualität über die Mietsituation in Berlin zu verbessern. Erste Untersuchungen ergaben, dass von der Berliner Senatsverwaltung für Stadtentwicklung und Umwelt ein Straßenverzeichnis im PDF-Format mit über 35.000 nicht maschinenlesbaren Einträgen über die Wohnlagen in Berlin vorlag.
 
 Unsere Idee war es, diese Daten zu Visualisieren und dem Endnutzer kostenlos ohne Restriktionen zu Verfügung zu stellen.
 
-Der Versuch, die in PDF zugänglichen Daten als auswertbare CSV Daten zu erhalten schlug leider fehlt. Im Kontakt mit der Senatsverwaltung wurden wir von Person zu Person weitergewiesen bis wir den richtigen Ansprechpartner (Frau Braun 030-901394776) gefunden hatten, welcher jegliche Anfragen ignorierte.
+Der Versuch, die in PDF zugänglichen Daten als auswertbare CSV Daten zu erhalten schlug leider fehlt. Im Kontakt mit der Senatsverwaltung wurden wir von Person zu Person weitergewiesen bis wir den richtigen Ansprechpartner gefunden hatten, welcher jegliche Anfragen ignorierte.
 
 ## Aufteilung der Aufgaben
 
