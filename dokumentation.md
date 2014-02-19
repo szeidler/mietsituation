@@ -1,34 +1,24 @@
 **Dokumentation des Open Data Projektes - Mietsituation Berlin**
 
-# **Konzeptionelle Phase**
-
-** **
+# Konzeptionelle Phase
 
 Als Gruppe beschlossen wir, die Datenqualität über die Mietsituation in Berlin zu verbessern. Erste Untersuchungen ergaben, dass von der Berliner Senatsverwaltung für Stadtentwicklung und Umwelt ein Straßenverzeichnis im PDF-Format mit über 10.000 nicht maschinenlesbaren Einträgen über die Wohnlagen in Berlin vorlag.
 
- 
-
 Unsere Idee war es, diese Daten zu Visualisieren und dem Endnutzer kostenlos ohne Restriktionen zu Verfügung zu stellen.
-
- 
 
 Der Versuch, die in PDF zugänglichen Daten als auswertbare CSV Daten zu erhalten schlug leider fehlt. Im Kontakt mit der Senatsverwaltung wurden wir von Person zu Person weitergewiesen bis wir den richtigen Ansprechpartner (Frau Braun 030-901394776) gefunden hatten, welcher jegliche Anfragen ignorierte.
 
-** **
-
 ## Aufteilung der Aufgaben
-
- 
 
 Die schlechte Datenqualität war zunächst eine Herausforderung. Um effektiv vorgehen zu können teilten wir unser Projekt in Unterkategorien auf. Es entstand eine Frontend, eine Backend und eine Datenqualitätsmanagement Gruppe.
 
-# **Entwicklungsphase**
 
-** **
+# Entwicklungsphase
 
 ## Datenqualitätsmanagement
 
 Die Datenqualitätsmanagement-Gruppe entwickelte eine Java Basierte Applikation zum Parsen des existierenden Straßenverzeichnisses in PDF-Form. Das Resultat war ein großer auswertbarer Datensatz, der sowohl als MySQL als auch JSON-Daten vorliegen.
+
 
 ### Parsing:
 
@@ -45,12 +35,11 @@ Zunächst haben wir die im Dokument verwendete Adressstruktur in Java-Objekte ge
 Das PDF Dokument gliedert sich im Sinne dieses Projektes in drei logische Teile:
 
 1. Einen schriftlichen Einleitungsteil, der für unser Vorhaben uninteressant ist
-
 2. eine Auflistung aller Berliner Stadbezirke
-
 3. die Ausweisung der Wohnlage aller Straßen in den zuvor aufgelisteten Bezirken
 
 Im ersten Programmschritt werden sämtliche Stadtbezirke eingelesen und in Objekten gespeichert. Anschließend werden die Ausweisungen der Wohnlagen eingelesen und an Hand der Kürzel den entsprechenden Bezirken zugewiesen. Auf Grund einer inkonsistenen Anzahl an Leerzeichen zwischen den Wörtern, sowie einer optionalen Ausweisug von Lärmbelästigung in Form eines Sterns (*), mussten diese Daten rückwärts eingelesen werden.
+
 
 ## Geocoding der Adressen
 
@@ -69,7 +58,6 @@ An diesem Punkt haben wir ein Adress-Objekt erzeugt, dass alle benötigten Infor
 Während unserer Recherche haben wir festgestellt, dass es auch die Wohnlagenbewertungen der letzten Mietspiegel-Veröffentlichungen des Berliner Senats gibt. Somit ist es denkbar einen Slider auf Zeitbasis einzubauen, der die Veränderungen der Wohnlagen im jeweils im Zwei-Jahres-Takt veröffentlichten Mietspiegel anzeigt. So könnten zum Beispiel Stadtviertel identifiziert werden, in dem es eine deutliche Aufwertung in den letzten Jahren gab.
 
 Um diese potentielle Möglichkeit nicht zu verbauen, haben wir uns dazu entschieden, die Daten zusätzlich in einer MySQL-Tabelle zu speichern. Über eine Abfragebedingung können so die Einträge des jeweiligen Jahres abgerufen und nach Bedarf miteinander verglichen werden. Außerdem hat sich während der Entwicklung der Frontend-Gruppe herausgestellt, dass die große Menge der Datenpunkte in der Javascript-Verarbeitung zu Performance-Schwierigkeiten bei Interaktion mit de Karte führen kann. Browser mit einer weniger robusten Javascript-Engine werden stark ausgelastet und es kann zur Timeouts innerhalb der Darstellung kommen. Die MySQL-Implementierung der Daten bietet hier die Möglichkeit mit dynamischen Abfragen die Anzahl der Datensätze zu verringern, z.B. durch Aggregierung und Kategorisierung oder durch die dynamische Abfrage nur der Standorte, die sich im momentanen Anzeigebereich der Karte befinden.
-
  
 
 ## Frontend zur Visualisierung der Daten
@@ -78,10 +66,6 @@ Die Frontend Gruppe beschäftigte sich zunächst intensiv mit der Google Maps AP
 
 Der erste Prototyp auf Basis der Google Maps API wurde fertiggestellt und zunächst mit wenigen Testdaten gefüllt.
 
- 
-
 Nach längerem Überlegen ist die Entscheidung gefallen um dem Konzept von Open Data treu zu bleiben auf Open Street Maps umzusteigen.
-
- 
 
 Im nächsten Schritt wurde ein neuer Prototyp der Heatmap auf Basis von Open Street Map mit eingebundenem Leaflet zur Visualisierung entwickelt.
